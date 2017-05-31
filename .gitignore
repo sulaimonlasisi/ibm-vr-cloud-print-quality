@@ -37,17 +37,18 @@ jspm_packages
 .npm
 
 # Optional REPL history
-.node_repl_history
+*.node_repl_history
 
 #Config folder
 src/node.js/node_tutorials/ibm_bluemix_watson/config
 
 #zip files
-.zip
+*.zip
 
 #images
-.jpg
-.png
+*.jpg
+*.png
+*.txt
 
 
 *.swp
