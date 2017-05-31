@@ -1,12 +1,12 @@
 const fs = require('fs');
 const client = require('../obj_storage/pkg_cloud_storage_conn.js').storageClient
-var watsonVR = require('./watson_vr_conn.js').watsonVR 
-/*
-const suv_pfx = 'suvs'
-const sed_pfx = 'sedans'
-const neg_pfx = 'neg'
+var watsonVR = require('./watson_vr_conn.js').watsonVR
+var variables = require("../config/variables.js").variables
 
-client.getFiles('9ja_drinks_custom_classifier_container', function (err, files, i){
+
+//This section creates a classifier anew by pulling data from ObjectStorage, creating custom classifiers with it and deleting the files 
+//that were saved locally from ObjectStorage.
+client.getFiles(variables.container, function (err, files){
   console.log("File size is "+ files.length);
   if (err) {
     console.log("Error occurred while trying to download file from object container ");
@@ -28,33 +28,36 @@ client.getFiles('9ja_drinks_custom_classifier_container', function (err, files, 
           remote: file.name
       }).pipe(stream);      
     })
+    watsonVR.createClassifier(
+    {  
+      name: 'car',  //this will be passed in via the UI
+      suv_positive_examples: fs.createReadStream(variables.positive_example_2),
+      sedan_positive_examples: fs.createReadStream(variables.positive_example_1),
+      negative_examples: fs.createReadStream(variables.negative_example)
+    },
+    function(err, response){
+      if (err)
+        console.log(err);
+      else
+        console.log(JSON.stringify(response, null, 2));
+        fs.unlink(variables.positive_example_2) //delete files used to create classifier
+        fs.unlink(variables.positive_example_1)
+        fs.unlink(variables.negative_example)
+    });
   }
 })
 
 
-watsonVR.createClassifier(
-{
-  name: 'car',  //this will be passed in via the UI
-  suv_positive_examples: fs.createReadStream('./'+suv_pfx+'.zip'),
-  sedan_positive_examples: fs.createReadStream('./'+sed_pfx+'.zip'),
-  negative_examples: fs.createReadStream('./'+neg_pfx+'.zip')
-},
-function(err, response){
-  if (err)
-    console.log(err);
-  else
-    console.log(JSON.stringify(response, null, 2));
-    fs.unlink('./'+suv_pfx+'.zip') //delete files used to create classifier
-    fs.unlink('./'+sed_pfx+'.zip')
-    fs.unlink('./'+neg_pfx+'.zip')
-});
 
-*/
+
+/*
+This section classifies a set of images provided. It works just fine with .zip files not more than 20
+different pictures and not larger than 5MB.
 
 var params = {
-  images_file: fs.createReadStream('./cars_test.zip'),
-  threshold: 0.7,
-  classifier_ids: "car_403572413"
+  images_file: fs.createReadStream(variables.test_file),
+  threshold: variables.threshold,
+  classifier_ids: variables.classifier_id
 };
 
 watsonVR.classify(params, function(err, res) {
@@ -68,3 +71,4 @@ watsonVR.classify(params, function(err, res) {
     })
     //console.log(JSON.stringify(res, null, 2));
 });
+*/
