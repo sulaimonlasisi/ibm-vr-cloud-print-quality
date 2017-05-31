@@ -1,70 +1,76 @@
 const fs = require('fs');
 const client = require('../obj_storage/pkg_cloud_storage_conn.js').storageClient
 var watsonVR = require('./watson_vr_conn.js').watsonVR 
-/*
-const suv_pfx = 'suvs'
-const sed_pfx = 'sedans'
-const neg_pfx = 'neg'
+var Promise = require('promise')
+var variables = require("../config/variables.js").variables
 
-client.getFiles('9ja_drinks_custom_classifier_container', function (err, files, i){
-  console.log("File size is "+ files.length);
-  if (err) {
-    console.log("Error occurred while trying to download file from object container ");
-    console.error(err);
-  }
-  else{
+
+
+function getContainerFiles(container_name){
+  return new Promise((resolve, reject) => {
+    client.getFiles(container_name, (err, files) => {
+      if (err) {
+        console.log("Error while trying to get container files.");
+        reject(err);
+      }
+      resolve(files);
+    })
+  })
+}
+
+function prepareStreams(files){
+  return new Promise((resolve, reject) => {
+
     files.forEach(function(file,index){
-      console.log("File "+index+" is "+file.name)
+      //console.log("File "+index+" is "+file.name)
       stream_name = file.name
       stream = fs.createWriteStream(stream_name)
       stream.on('error', function() {
-          console.log('error');
+        console.log("Error while trying to create stream.");
+        console.log('error');
       });
       stream.on('finish', function() {
-          console.log('done');
+          if((index+1) === files.length) {
+          resolve();
+        }
+          
       });
       client.download({
           container: file.container,
           remote: file.name
-      }).pipe(stream);      
+      }).pipe(stream);
     })
-  }
-})
+  })  
+} 
 
 
-watsonVR.createClassifier(
-{
-  name: 'car',  //this will be passed in via the UI
-  suv_positive_examples: fs.createReadStream('./'+suv_pfx+'.zip'),
-  sedan_positive_examples: fs.createReadStream('./'+sed_pfx+'.zip'),
-  negative_examples: fs.createReadStream('./'+neg_pfx+'.zip')
-},
-function(err, response){
-  if (err)
-    console.log(err);
-  else
-    console.log(JSON.stringify(response, null, 2));
-    fs.unlink('./'+suv_pfx+'.zip') //delete files used to create classifier
-    fs.unlink('./'+sed_pfx+'.zip')
-    fs.unlink('./'+neg_pfx+'.zip')
-});
 
-*/
-
-var params = {
-  images_file: fs.createReadStream('./cars_test.zip'),
-  threshold: 0.7,
-  classifier_ids: "car_403572413"
-};
-
-watsonVR.classify(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else
-    res.images.forEach(function(image, idx, res_array){
-      if (image.classifiers.length > 0) {
-        console.log('Object has been classified as a: '+image.classifiers[0].classes[0].class+' with a '+image.classifiers[0].classes[0].score+' confidence value.')
+function createCustomClassifier(params){
+  watsonVR.createClassifier(
+    params = {
+      name: variables.classifier_name,  
+      suv_positive_examples: fs.createReadStream(variables.positive_example_1),
+      sedan_positive_examples: fs.createReadStream(variables.positive_example_2),
+      negative_examples: fs.createReadStream(variables.negative_example)
+    },
+    function(err, response){
+      if (err){
+        console.log("Error while trying to create classifier.");
+        console.log(err);
       }
-    })
-    //console.log(JSON.stringify(res, null, 2));
-});
+      else{
+        console.log(JSON.stringify(response, null, 2));
+        fs.unlink(variables.positive_example_1) //delete files used to create classifier
+        fs.unlink(variables.positive_example_2)
+        fs.unlink(variables.negative_example)
+      }      
+    }
+  )
+}
+
+
+
+getContainerFiles(variables.container)
+.then((files) => prepareStreams(files))
+.then((params) => createCustomClassifier(params))
+

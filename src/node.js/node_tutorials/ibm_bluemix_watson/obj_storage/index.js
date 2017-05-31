@@ -1,5 +1,7 @@
 const fs = require('fs');
 var storageClient = require('./pkg_cloud_storage_conn.js').storageClient
+var variables = require("../config/variables.js").variables
+
 /*sample function to get all containers
 
 storageClient.getContainers(function (err, containers) {
@@ -17,10 +19,10 @@ storageClient.getContainers(function (err, containers) {
 
 //sample function to upload to a container
 
-var readStream = fs.createReadStream('C:/Users/sulasisi/Documents/summer_2017_cloud_print_quality_project/ibm_visual_recognition/data/image_test/neg.zip');
+var readStream = fs.createReadStream(variables.object_to_upload_local_path);
 var writeStream = storageClient.upload({
-container: '9ja_drinks_custom_classifier_container',
-remote: 'neg.zip'
+container: variables.container,
+remote: variables.remote
 });
 
 writeStream.on('error', function(err) {
@@ -32,5 +34,3 @@ writeStream.on('success', function(file) {
 });
 
 readStream.pipe(writeStream);
-
-//
