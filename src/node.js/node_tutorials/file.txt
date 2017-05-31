@@ -1,6 +1,0 @@
-Thoughts for Meeting with Chad
-1. IBM Watson VR should do what we need. The Bluemix suite by IBM also has a storage service but I am currently on a 30-day trial. The 30-day trial version should allow me to achieve the goal of the project but after the trial, I will not have access to the container that stores all the images and most services. Only compute services are free beyond the expiry of the trial period.
-	The subscription model after trial could be signing up for a plan or enrolling in a Pay-As-You-Go plan.
-
-2. Amazon has a similar tool called Amazon Rekognition but it does not do custom classification. It only detects faces, moderates image contents (NSFW) and does tagged image searching. It won't do what we need.
-3. We don't really need S3 just for the sake of storage if we can get the same storage option from Bluemix.
