@@ -102,5 +102,3 @@ var classifier_params = {
 classifyObjects(classifier_params);
 
 
-
-
