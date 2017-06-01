@@ -42,6 +42,14 @@ jspm_packages
 #Config folder
 src/node.js/node_tutorials/ibm_bluemix_watson/config
 
+
+#irrelevant folders and files
+src/node.js/node_tutorials/accuweather/
+src/node.js/node_tutorials/app/
+src/node.js/node_tutorials/index.js
+src/node.js/node_tutorials/node_callback_example.js
+src/node.js/node_tutorials/node_promise_example.js
+src/node.js/node_tutorials/package.json
 #zip files
 *.zip
 
@@ -50,8 +58,9 @@ src/node.js/node_tutorials/ibm_bluemix_watson/config
 *.png
 *.txt
 
-
+#swap_files
 *.swp
 
 results
+
 
