@@ -20,7 +20,6 @@ function getContainerFiles(container_name){
 
 function prepareStreams(files){
   return new Promise((resolve, reject) => {
-
     files.forEach(function(file,index){
       //console.log("File "+index+" is "+file.name)
       stream_name = file.name
@@ -73,4 +72,30 @@ function createCustomClassifier(params){
 getContainerFiles(variables.container)
 .then((files) => prepareStreams(files))
 .then((params) => createCustomClassifier(params))
+
+
+
+
+/*
+This section classifies a set of images provided. It works just fine with .zip files not more than 20
+different pictures and not larger than 5MB.
+
+var params = {
+  images_file: fs.createReadStream(variables.test_file),
+  threshold: variables.threshold,
+  classifier_ids: variables.classifier_id
+};
+
+watsonVR.classify(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    res.images.forEach(function(image, idx, res_array){
+      if (image.classifiers.length > 0) {
+        console.log('Object has been classified as a: '+image.classifiers[0].classes[0].class+' with a '+image.classifiers[0].classes[0].score+' confidence value.')
+      }
+    })
+    //console.log(JSON.stringify(res, null, 2));
+});
+*/
 
