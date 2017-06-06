@@ -5,14 +5,15 @@ var variables = require("../config/variables.js").variables
 
 /*
 Call to create custom classifier
+*/
 storage_conn.getContainerFiles(variables.container)
 .then((files) => storage_conn.prepareDownloadStreams(files))
 .then(()=> watson_conn.prepareTrainingStreams())
 .then((params) => watson_conn.createCustomClassifier(params))
-*/
 
 
 
+/*
 
 var classifier_params = {
   //images_file: fs.createReadStream(variables.test_file),
@@ -23,4 +24,4 @@ var classifier_params = {
 watson_conn.classifyObjects(classifier_params);
 
 
-
+*/

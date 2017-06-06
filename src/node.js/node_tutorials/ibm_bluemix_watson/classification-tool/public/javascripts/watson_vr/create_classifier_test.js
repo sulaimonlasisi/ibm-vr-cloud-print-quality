@@ -2,7 +2,7 @@ var fs = require('fs');
 var watsonVR = require('./watson_vr_conn.js').watsonVR
 var variables = require("../config/variables.js").variables
 
-
+/*
 //Function to create a classifier from files available locally
 
 var params = {
@@ -20,7 +20,7 @@ watsonVR.createClassifier(params,
     console.log(JSON.stringify(response, null, 2));
 });
 
-/*
+
 watsonVR.getClassifier({
   classifier_id: variables.classifier_id },
   function(err, response) {
@@ -30,4 +30,16 @@ watsonVR.getClassifier({
     console.log(JSON.stringify(response, null, 2));
   }
 );
+
+
+
 */
+
+watsonVR.listClassifiers({},
+  function(err, response) {
+   if (err)
+    console.log(err);
+   else
+    console.log(JSON.stringify(response, null, 2));
+  }
+);
