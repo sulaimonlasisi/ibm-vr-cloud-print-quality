@@ -16,7 +16,6 @@ router.get('/', watson_controller.listClassifiers);
 router.get('/classify', watson_controller.classify);
 
 
-
 // Get classifier details for a given classifier
 router.get('/get-classifier-details', watson_controller.getClassifierDetails);
 

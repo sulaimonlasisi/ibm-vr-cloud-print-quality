@@ -42,7 +42,6 @@ exports.listClassifiers = function (req, res) {
     watson_conn.listClassifiers().then((info) => res.send(info))
 }
 
-
 exports.getClassifierDetails = function (req, res) {
 	watson_conn.getClassifierDetails(variables.classifier_id).then((info) => res.send(info))
 }

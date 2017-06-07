@@ -45,6 +45,7 @@ config
 watson_vr
 obj_storage
 
+
 #irrelevant folders and files
 src/node.js/node_tutorials/accuweather/
 src/node.js/node_tutorials/app/

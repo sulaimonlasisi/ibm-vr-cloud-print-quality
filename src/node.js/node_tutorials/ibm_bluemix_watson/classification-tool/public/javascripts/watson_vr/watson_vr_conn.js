@@ -103,7 +103,6 @@ function listClassifiers (){
   })
 }
 
-
 function getClassifierDetails(classifier_id) {
   return new Promise((resolve, reject) => {
     watsonVR.getClassifier({
@@ -122,12 +121,11 @@ function getClassifierDetails(classifier_id) {
 }
 
 
-
-
 module.exports.watsonVR = watsonVR
 module.exports.classifyObjects = classifyObjects
 module.exports.createCustomClassifier = createCustomClassifier
 module.exports.prepareTrainingStreams = prepareTrainingStreams
 module.exports.listClassifiers = listClassifiers
 module.exports.getClassifierDetails = getClassifierDetails
+
 
