@@ -1,7 +1,15 @@
-doctype html
-html
+
+html(ng-app="myApp")
   head
-    title= title
+    meta(charset='utf8')
+    base(href='/')
+    title Classification Tool
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js')
+    script(src='javascripts/app.js')
+    script(src='javascripts/services.js')
+    script(src='javascripts/controllers.js')
+    script(src='javascripts/filters.js')
+    script(src='javascripts/directives.js')
   body
     block content

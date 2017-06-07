@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+exports.index = function(req, res){
+  res.render('index');
+};
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.redirect('/tasks');
-});
-
-module.exports = router;
+exports.partials = function (req, res) {
+  var name = req.params.name;
+  res.render('partials/' + name);
+};

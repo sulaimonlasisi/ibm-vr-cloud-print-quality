@@ -96,13 +96,13 @@ function listClassifiers (){
        }        
         else{
           //console.log(JSON.stringify(response, null, 2));
-          resolve (JSON.stringify(response, null, 2));
+          //resolve (JSON.stringify(response, null, 2));
+          resolve (response);
         }      
       }
     );
   })
 }
-
 
 function getClassifierDetails(classifier_id) {
   return new Promise((resolve, reject) => {
@@ -122,12 +122,11 @@ function getClassifierDetails(classifier_id) {
 }
 
 
-
-
 module.exports.watsonVR = watsonVR
 module.exports.classifyObjects = classifyObjects
 module.exports.createCustomClassifier = createCustomClassifier
 module.exports.prepareTrainingStreams = prepareTrainingStreams
 module.exports.listClassifiers = listClassifiers
 module.exports.getClassifierDetails = getClassifierDetails
+
 

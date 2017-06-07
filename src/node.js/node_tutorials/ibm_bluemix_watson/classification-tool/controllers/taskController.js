@@ -39,7 +39,26 @@ exports.classify = function(req, res) {
 
 exports.listClassifiers = function (req, res) {
 	// body...
-    watson_conn.listClassifiers().then((info) => res.send(info))
+	var posts = []
+	watson_conn.listClassifiers().then((classifiers_obj) => jsonifyArray(classifiers_obj)).then((classifiers_array) => res.json({classifiers: classifiers_array}))
+}
+
+
+function jsonifyArray(obj){
+	var classifiers_array = []
+	//console.log(obj.classifiers)
+	return new Promise((resolve, reject) => {
+      obj.classifiers.forEach(function (classifier, i) {
+		  classifiers_array.push({
+		  id: i,
+		  name: classifier.name,
+		  status: classifier.status
+		})
+		if (i+1 === obj.classifiers.length) {
+		  resolve(classifiers_array);
+		}
+	  })
+	})
 }
 
 

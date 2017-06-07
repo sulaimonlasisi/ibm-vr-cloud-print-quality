@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div
+    h2 Classification Tool
+    ul
+      li
+        a(href='/') Home
+      li
+        a(href='/listClassifiers') List Classifiers
+    div(ng-view)
+  
