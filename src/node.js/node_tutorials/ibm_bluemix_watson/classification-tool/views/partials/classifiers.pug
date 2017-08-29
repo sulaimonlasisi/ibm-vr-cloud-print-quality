@@ -1,0 +1,7 @@
+block content
+  div(ng-controller="ClassifiersCtrl")
+    p There are {{classsifiers.length}} classifiers
+    div(ng-repeat='classifier in classifiers')
+      h3 {{classifier.name}}
+      div {{classifier.status}}
+  

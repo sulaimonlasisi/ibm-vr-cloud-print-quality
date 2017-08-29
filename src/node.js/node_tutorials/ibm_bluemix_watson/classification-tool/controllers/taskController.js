@@ -61,7 +61,6 @@ function jsonifyArray(obj){
 	})
 }
 
-
 exports.getClassifierDetails = function (req, res) {
 	watson_conn.getClassifierDetails(variables.classifier_id).then((info) => res.send(info))
 }
